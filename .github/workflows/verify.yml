@@ -30,6 +30,11 @@ jobs:
       - name: Test deployed web application
         run: curl --fail http://localhost:8080
 
+      - name: Capture deployed application screenshot
+        run: |
+          npx playwright install --with-deps chromium
+          npx playwright screenshot --viewport-size=1440,900 http://localhost:8080 10-final-output.png
+
       - name: Upload terminal evidence
         uses: actions/upload-artifact@v4
         with:
@@ -38,3 +43,4 @@ jobs:
             01-jasmine-tests-passing
             03-docker-build-output
             04-docker-image
+            10-final-output.png
