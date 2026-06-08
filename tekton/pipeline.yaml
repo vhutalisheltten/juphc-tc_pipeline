@@ -1,0 +1,56 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: tax-calculator-delivery
+spec:
+  params:
+    - name: git-url
+      type: string
+    - name: git-revision
+      type: string
+      default: main
+    - name: image
+      type: string
+    - name: application
+      type: string
+      default: tax-calculator
+  workspaces:
+    - name: shared-data
+  tasks:
+    - name: clone
+      taskRef:
+        name: git-clone
+      params:
+        - name: url
+          value: $(params.git-url)
+        - name: revision
+          value: $(params.git-revision)
+      workspaces:
+        - name: output
+          workspace: shared-data
+    - name: test
+      runAfter: [clone]
+      taskRef:
+        name: jasmine-test
+      workspaces:
+        - name: source
+          workspace: shared-data
+    - name: build-push
+      runAfter: [test]
+      taskRef:
+        name: build-and-push
+      params:
+        - name: image
+          value: $(params.image)
+      workspaces:
+        - name: source
+          workspace: shared-data
+    - name: deploy
+      runAfter: [build-push]
+      taskRef:
+        name: deploy-code-engine
+      params:
+        - name: image
+          value: $(params.image)
+        - name: application
+          value: $(params.application)

@@ -1,0 +1,13 @@
+apiVersion: codeengine.cloud.ibm.com/v1beta1
+kind: Application
+metadata:
+  name: tax-calculator
+spec:
+  imageReference: us.icr.io/YOUR_NAMESPACE/tax-calculator:latest
+  imagePort: 8080
+  scale:
+    minReplicas: 0
+    maxReplicas: 3
+    concurrency: 100
+    cpuLimit: "1"
+    memoryLimit: 1G

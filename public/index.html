@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tax Calculator</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main>
+    <p class="eyebrow">2024 estimate</p>
+    <h1>Tax Calculator</h1>
+    <p class="intro">Estimate US federal income tax using progressive single-filer brackets.</p>
+    <form id="tax-form">
+      <label for="income">Annual taxable income</label>
+      <div class="input-row"><span>$</span><input id="income" type="number" min="0" step="0.01" required value="75000"></div>
+      <button type="submit">Calculate tax</button>
+    </form>
+    <section id="result" aria-live="polite" hidden></section>
+    <p class="note">For demonstration only. This is not tax advice.</p>
+  </main>
+  <script src="/tax.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

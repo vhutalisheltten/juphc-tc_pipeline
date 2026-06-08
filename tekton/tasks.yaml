@@ -1,0 +1,52 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: jasmine-test
+spec:
+  workspaces:
+    - name: source
+  steps:
+    - name: test
+      image: node:22-alpine
+      workingDir: $(workspaces.source.path)
+      script: |
+        npm ci
+        npm test
+---
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: build-and-push
+spec:
+  params:
+    - name: image
+      type: string
+  workspaces:
+    - name: source
+  steps:
+    - name: build-push
+      image: gcr.io/kaniko-project/executor:latest
+      args:
+        - --dockerfile=$(workspaces.source.path)/Dockerfile
+        - --context=$(workspaces.source.path)
+        - --destination=$(params.image)
+---
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: deploy-code-engine
+spec:
+  params:
+    - name: image
+      type: string
+    - name: application
+      type: string
+      default: tax-calculator
+  steps:
+    - name: deploy
+      image: icr.io/continuous-delivery/pipeline/pipeline-base-ubi:latest
+      script: |
+        ibmcloud ce application update \
+          --name "$(params.application)" \
+          --image "$(params.image)" \
+          --port 8080
