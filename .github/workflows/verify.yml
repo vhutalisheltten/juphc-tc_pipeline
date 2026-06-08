@@ -1,0 +1,40 @@
+name: Verify Tax Calculator
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run seven Jasmine specs
+        run: npx jasmine | tee 01-jasmine-tests-passing
+
+      - name: Build Docker image
+        run: docker build --progress=plain -t tax-calculator:latest . 2>&1 | tee 03-docker-build-output
+
+      - name: Run Docker image
+        run: docker run -d -p 8080:80 --name tax-calculator tax-calculator:latest
+
+      - name: Show running Docker image
+        run: docker ps | tee 04-docker-image
+
+      - name: Test deployed web application
+        run: curl --fail http://localhost:8080
+
+      - name: Upload terminal evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: terminal-evidence
+          path: |
+            01-jasmine-tests-passing
+            03-docker-build-output
+            04-docker-image

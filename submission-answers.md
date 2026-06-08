@@ -24,7 +24,7 @@ Finished in 0.065 seconds
 ```
 
 **GitHub URL:**  
-`https://github.com/vhutalisheltten/tax-calculator-final-project/blob/main/spec/taxSpec.js`
+`https://github.com/vhutalisheltten/juphc-tc_pipeline/blob/main/spec/taxSpec.js`
 
 **Evidence to upload:** Screenshot of the passing Jasmine terminal output.
 
@@ -46,7 +46,7 @@ CMD ["node", "server.js"]
 ```
 
 **GitHub URL:**  
-`https://github.com/vhutalisheltten/tax-calculator-final-project/blob/main/Dockerfile`
+`https://github.com/vhutalisheltten/juphc-tc_pipeline/blob/main/Dockerfile`
 
 ## 3. Build the Docker image
 
@@ -124,7 +124,7 @@ The file defines three tasks:
 - `deploy-code-engine`
 
 **GitHub URL:**  
-`https://github.com/vhutalisheltten/tax-calculator-final-project/blob/main/tekton/tasks.yaml`
+`https://github.com/vhutalisheltten/juphc-tc_pipeline/blob/main/tekton/tasks.yaml`
 
 ## 8. Extend the Pipeline to call required tasks
 
@@ -139,7 +139,7 @@ clone -> test -> build-push -> deploy
 Each task uses `runAfter`, so a failure prevents later stages from running.
 
 **GitHub URL:**  
-`https://github.com/vhutalisheltten/tax-calculator-final-project/blob/main/tekton/pipeline.yaml`
+`https://github.com/vhutalisheltten/juphc-tc_pipeline/blob/main/tekton/pipeline.yaml`
 
 ## 9. Run the Tekton pipeline
 

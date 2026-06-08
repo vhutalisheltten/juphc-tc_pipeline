@@ -1,56 +1,46 @@
-apiVersion: tekton.dev/v1
+apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: tax-calculator-delivery
+  name: tax-calculator-pipeline
 spec:
   params:
-    - name: git-url
+    - name: repo-url
       type: string
-    - name: git-revision
+    - name: image-reference
       type: string
-      default: main
-    - name: image
-      type: string
-    - name: application
-      type: string
-      default: tax-calculator
   workspaces:
-    - name: shared-data
+    - name: pipeline-workspace
   tasks:
     - name: clone
       taskRef:
         name: git-clone
       params:
         - name: url
-          value: $(params.git-url)
-        - name: revision
-          value: $(params.git-revision)
+          value: $(params.repo-url)
       workspaces:
         - name: output
-          workspace: shared-data
-    - name: test
+          workspace: pipeline-workspace
+    - name: npminstall
       runAfter: [clone]
       taskRef:
-        name: jasmine-test
+        name: npm
       workspaces:
         - name: source
-          workspace: shared-data
-    - name: build-push
-      runAfter: [test]
+          workspace: pipeline-workspace
+    - name: tests
+      runAfter: [npminstall]
       taskRef:
-        name: build-and-push
-      params:
-        - name: image
-          value: $(params.image)
+        name: jasmine
       workspaces:
         - name: source
-          workspace: shared-data
-    - name: deploy
-      runAfter: [build-push]
+          workspace: pipeline-workspace
+    - name: build
+      runAfter: [tests]
       taskRef:
-        name: deploy-code-engine
+        name: buildah
       params:
-        - name: image
-          value: $(params.image)
-        - name: application
-          value: $(params.application)
+        - name: IMAGE
+          value: $(params.image-reference)
+      workspaces:
+        - name: source
+          workspace: pipeline-workspace

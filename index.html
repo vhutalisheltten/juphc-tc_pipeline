@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tax Calculator</title>
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Tax Calculator</p>
+    <h1>Estimate your tax</h1>
+    <form id="tax-form">
+      <label for="income">Annual taxable income</label>
+      <input id="income" type="number" min="0" step="0.01" value="75000" required>
+      <button type="submit">Calculate</button>
+    </form>
+    <section id="result" aria-live="polite"></section>
+  </main>
+  <script src="taxCalculator.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

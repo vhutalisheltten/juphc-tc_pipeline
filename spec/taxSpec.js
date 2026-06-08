@@ -1,6 +1,6 @@
 "use strict";
 
-const { calculateTax, calculateSummary } = require("../public/tax");
+const { calculateTax, calculateSummary } = require("../taxCalculator");
 
 describe("Tax Calculator", () => {
   it("returns zero tax for zero income", () => {
@@ -27,5 +27,13 @@ describe("Tax Calculator", () => {
   it("rejects negative and non-numeric income", () => {
     expect(() => calculateTax(-1)).toThrowError(TypeError);
     expect(() => calculateTax("invalid")).toThrowError(TypeError);
+  });
+
+  it("calculates tax at the first bracket boundary", () => {
+    expect(calculateTax(11600)).toBe(1160);
+  });
+
+  it("accepts numeric income supplied as a string", () => {
+    expect(calculateTax("10000")).toBe(1000);
   });
 });

@@ -17,8 +17,7 @@ Open `http://localhost:8080` and verify `http://localhost:8080/health`.
 
 ```sh
 docker build -t tax-calculator:latest .
-docker run --rm -p 8080:8080 tax-calculator:latest
-curl http://localhost:8080/health
+docker run --rm -p 8080:80 tax-calculator:latest
 ```
 
 ## IBM Cloud Container Registry and Code Engine
@@ -52,27 +51,27 @@ Install the catalog `git-clone` task, apply the supplied resources, then run:
 ```sh
 kubectl apply -f tekton/tasks.yaml
 kubectl apply -f tekton/pipeline.yaml
-kubectl create -f tekton/pipelinerun.yaml
+kubectl create -f tekton/run.yaml
 tkn pipelinerun logs --last -f
 ```
 
-Before running, replace placeholders in `tekton/pipelinerun.yaml` and configure
+Before running, replace placeholders in `tekton/run.yaml` and configure
 registry authentication plus IBM Cloud credentials in the pipeline environment.
 
 ## Grading criteria map
 
 | # | Criterion | Evidence/artifact |
 |---|---|---|
-| 1 | Run unit tests using Jasmine | `spec/taxSpec.js`, `npm test` |
+| 1 | Run unit tests using Jasmine | `spec/taxSpec.js`, `npx jasmine` |
 | 2 | Create Dockerfile | `Dockerfile` |
 | 3 | Build Docker image | `docker build -t tax-calculator:latest .` |
-| 4 | Deploy/test local container | `docker run`, `/health` |
+| 4 | Deploy/test local container | `docker run`, `docker ps` |
 | 5 | Tag/push to IBM Cloud Registry | IBM Cloud commands above |
 | 6 | Deploy on IBM Cloud | `ibm-cloud/code-engine.yaml`, Code Engine commands |
 | 7 | Create Tekton tasks | `tekton/tasks.yaml` |
 | 8 | Extend pipeline to call tasks | `tekton/pipeline.yaml` |
-| 9 | Run Tekton pipeline | `tekton/pipelinerun.yaml` |
-| 10 | Deploy image built by pipeline | `deploy-code-engine` task |
+| 9 | Run Tekton pipeline | `tekton/run.yaml` |
+| 10 | Deploy image built by pipeline | Pipeline build output |
 
 ## Submission evidence
 
