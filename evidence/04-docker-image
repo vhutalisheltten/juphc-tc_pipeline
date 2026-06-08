@@ -1,0 +1,2 @@
+CONTAINER ID   IMAGE                   COMMAND                  CREATED                  STATUS                  PORTS                                     NAMES
+6d853cbfa14b   tax-calculator:latest   "/docker-entrypoint.…"   Less than a second ago   Up Less than a second   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   tax-calculator

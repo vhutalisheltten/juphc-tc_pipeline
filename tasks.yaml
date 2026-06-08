@@ -1,0 +1,29 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: npm
+spec:
+  description: Install the Tax Calculator npm dependencies.
+  workspaces:
+    - name: source
+  steps:
+    - name: npm-install
+      image: node:18
+      workingDir: $(workspaces.source.path)
+      command: [npm]
+      args: [install]
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: jasmine
+spec:
+  description: Run the Jasmine unit tests.
+  workspaces:
+    - name: source
+  steps:
+    - name: jasmine-tests
+      image: node:18
+      workingDir: $(workspaces.source.path)
+      command: [npx]
+      args: [jasmine]

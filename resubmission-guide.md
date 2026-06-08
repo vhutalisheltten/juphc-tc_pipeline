@@ -6,15 +6,14 @@ Repository: `https://github.com/vhutalisheltten/juphc-tc_pipeline`
 
 1. Paste the contents of `evidence/01-jasmine-tests-passing`.
 2. Paste the contents of `evidence/02-dockerfile`.
-3. Download the `terminal-evidence` artifact from the latest GitHub Actions run
-   and paste `03-docker-build-output`.
-4. From the same artifact, paste `04-docker-image`.
+3. Paste the contents of `evidence/03-docker-build-output`.
+4. Paste the contents of `evidence/04-docker-image`.
 7. Submit:
-   `https://github.com/vhutalisheltten/juphc-tc_pipeline/blob/main/tekton/tasks.yaml`
+   `https://github.com/vhutalisheltten/juphc-tc_pipeline/blob/main/tasks.yaml`
 8. Submit:
-   `https://github.com/vhutalisheltten/juphc-tc_pipeline/blob/main/tekton/pipeline.yaml`
+   `https://github.com/vhutalisheltten/juphc-tc_pipeline/blob/main/pipeline.yaml`
 9. Submit:
-   `https://github.com/vhutalisheltten/juphc-tc_pipeline/blob/main/tekton/run.yaml`
+   `https://github.com/vhutalisheltten/juphc-tc_pipeline/blob/main/run.yaml`
 
 ## Requires your IBM Cloud account
 
